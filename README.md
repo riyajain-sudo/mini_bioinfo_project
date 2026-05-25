@@ -1,4 +1,4 @@
-# In Silico Functional Sequence Characterization of p53 Protein using Bioinformatics
+# In Silico Functional Characterization of Human p53 Protein using Sequence Analysis and Homology-Based Annotation
 
 ## Project Overview
 
