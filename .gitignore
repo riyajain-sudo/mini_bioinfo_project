@@ -1,0 +1,15 @@
+# Python
+__pycache__/
+*.pyc
+
+# Virtual Environment
+.venv/
+
+# BLAST XML
+blast_results.xml
+
+# VS Code
+.vscode/
+
+# System Files
+.DS_Store
