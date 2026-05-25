@@ -1,4 +1,4 @@
-# Functional Sequence Characterization of p53 Protein using Bioinformatics
+# In Silico Functional Sequence Characterization of p53 Protein using Bioinformatics
 
 ## Project Overview
 
