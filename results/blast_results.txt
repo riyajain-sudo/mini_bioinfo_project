@@ -1,0 +1,27 @@
+Top BLAST Hits
+
+Hit: ref|XP_063556659.1| cellular tumor antigen p53 isoform X1 [Gorilla gorilla gorilla]
+E-value: 0.0
+Identity: 392
+Alignment Length: 393
+--------------------------------------------------
+Hit: pdb|7XZZ|K Chain K, Cellular tumor antigen p53 [Homo sapiens] >pdb|7XZZ|L Chain L, Cellular tumor antigen p53 [Homo sapiens] >pdb|7XZZ|M Chain M, Cellular tumor antigen p53 [Homo sapiens] >pdb|7XZZ|N Chain N, Cellular tumor antigen p53 [Homo sapiens]
+E-value: 0.0
+Identity: 393
+Alignment Length: 393
+--------------------------------------------------
+Hit: pdb|8R1F|C Chain C, Cellular tumor antigen p53 [Homo sapiens] >pdb|8R1G|C Chain C, Cellular tumor antigen p53 [Homo sapiens] >pdb|8R1G|F Chain F, Cellular tumor antigen p53 [Homo sapiens] >pdb|9R04|K Chain K, Cellular tumor antigen p53 [Homo sapiens] >pdb|9R04|L Chain L, Cellular tumor antigen p53 [Homo sapiens] >pdb|9R04|M Chain M, Cellular tumor antigen p53 [Homo sapiens] >pdb|9R04|N Chain N, Cellular tumor antigen p53 [Homo sapiens] >pdb|9R2M|K Chain K, Cellular tumor antigen p53 [Homo sapiens] >pdb|9R2M|L Chain L, Cellular tumor antigen p53 [Homo sapiens] >pdb|9R2M|M Chain M, Cellular tumor antigen p53 [Homo sapiens] >pdb|9R2M|N Chain N, Cellular tumor antigen p53 [Homo sapiens] >pdb|9R2P|K Chain K, Cellular tumor antigen p53 [Homo sapiens] >pdb|9R2P|L Chain L, Cellular tumor antigen p53 [Homo sapiens] >pdb|9R2P|M Chain M, Cellular tumor antigen p53 [Homo sapiens] >pdb|9R2P|N Chain N, Cellular tumor antigen p53 [Homo sapiens] >pdb|9R2Q|K Chain K, Cellular tumor antigen p53 [Homo sapiens] >pdb|9R2Q|L Chain L, Cellular tumor antigen p53 [Homo sapiens] >pdb|9R2Q|M Chain M, Cellular tumor antigen p53 [Homo sapiens] >pdb|9R2Q|N Chain N, Cellular tumor antigen p53 [Homo sapiens]
+E-value: 0.0
+Identity: 393
+Alignment Length: 393
+--------------------------------------------------
+Hit: ref|NP_000537.3| cellular tumor antigen p53 isoform a [Homo sapiens] >ref|NP_001119584.1| cellular tumor antigen p53 isoform a [Homo sapiens] >ref|NP_001394191.1| cellular tumor antigen p53 isoform a [Homo sapiens] >ref|NP_001394193.1| cellular tumor antigen p53 isoform a [Homo sapiens] >ref|NP_001394195.1| cellular tumor antigen p53 isoform a [Homo sapiens] >ref|XP_001172077.2| cellular tumor antigen p53 isoform X2 [Pan troglodytes] >ref|XP_003810114.3| cellular tumor antigen p53 isoform X2 [Pan paniscus] >sp|P04637.4| RecName: Full=Cellular tumor antigen p53; AltName: Full=Antigen NY-CO-13; AltName: Full=Phosphoprotein p53; AltName: Full=Tumor suppressor p53 [Homo sapiens] >pdb|6XRE|M Chain M, Cellular tumor antigen p53 [Homo sapiens] >pdb|8F2H|A Chain A, Cellular tumor antigen p53 [Homo sapiens] >pdb|8F2H|B Chain B, Cellular tumor antigen p53 [Homo sapiens] >pdb|8F2I|A Chain A, Cellular tumor antigen p53 [Homo sapiens] >gb|AAF64408.1| tumor suppressor protein p53 [Expression vector Ad5CMV-p53] >gb|AAA59988.1| phosphoprotein p53 [Homo sapiens] >gb|AFN61604.1| tumor suppressor p53 [Homo sapiens] >gb|AFN61605.1| tumor suppressor p53 [Homo sapiens] >gb|AYE20619.1| mutant tumor protein p53 [Homo sapiens]
+E-value: 0.0
+Identity: 393
+Alignment Length: 393
+--------------------------------------------------
+Hit: gb|AYE20617.1| mutant tumor protein p53 [Homo sapiens]
+E-value: 0.0
+Identity: 392
+Alignment Length: 393
+--------------------------------------------------
