@@ -72,13 +72,11 @@ Functional_Sequence_Characterization/
 ├── analysis/
 │   ├── sequence_analysis.py
 │   ├── homology_analysis.py
-│   ├── functional_annotation.py
-│   └── biological_interpretation.py
+│   └── functional_annotation.py
 │
 ├── results/
 │   ├── blast_results.xml
 │   ├── blast_results.txt
-│   ├── functional_annotation.txt
-│   └── biological_interpretation.txt
+│   └── functional_annotation.txt
 │
 └── README.md
