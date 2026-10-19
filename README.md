@@ -1,82 +1,21 @@
-# In Silico Functional Characterization of Human p53 Protein using Sequence Analysis and Homology-Based Annotation
+# In silico characterization of human p53 (P04637)
 
-## Project Overview
+This small example validates the bundled human TP53 protein FASTA, computes sequence-derived physicochemical summaries, parses a **frozen, pre-existing BLAST XML snapshot**, and can optionally retrieve the direct UniProt record. It does not retrieve the FASTA from UniProt and the BLAST parser does not run BLAST. The saved search date/parameters are not established here. The UniProt script reports curated database annotation, **not a homology-based prediction**. These outputs are educational snapshots, not clinical interpretation or independent proof of broad evolutionary conservation.
 
-This project focuses on the **in silico identification and functional characterization** of the human **p53 protein** using sequence analysis and homology-based annotation techniques.
+## Setup
 
-The workflow includes:
+Python 3.10+ is recommended. From the repository root: `python -m venv .venv`, activate it, then `python -m pip install -r requirements.txt`. All data/results paths are anchored to the repository, so the commands below also work if invoked from another current directory using an absolute script path.
 
-- Sequence retrieval
-- Sequence quality analysis
-- Sequence filtering and validation
-- Homology search using BLAST
-- Functional annotation using UniProt
-- Biological interpretation
+## Offline steps
 
-The project demonstrates how computational biology tools can be used to predict protein function from sequence information.
+```sh
+python analysis/sequence_analysis.py
+python analysis/homology_analysis.py
+python -m unittest discover -s tests -v
+```
 
----
+Sequence metrics require exactly one FASTA record, at least 100 residues, and only the 20 standard amino-acid symbols; X, B, Z, U, O, stop markers and punctuation are rejected with positions before any metric is computed. The checked-in sequence has 393 residues. The BLAST summary excludes P04637 and full-query exact sequence matches and duplicate accessions, reports accession/title, percent identity, query coverage, E-value and score, and labels the results as a frozen snapshot. Archived XML metadata does not establish a reproducible database date or search parameters.
 
-# Objective
+## Optional live UniProt retrieval
 
-The main objective of this project is to:
-
-- Analyze the p53 protein sequence computationally
-- Identify homologous proteins using BLAST
-- Retrieve functional annotations from UniProt
-- Predict the biological role of the protein using homology-based evidence
-
----
-
-# Selected Protein
-
-| Property | Details |
-|---|---|
-| Protein Name | Cellular tumor antigen p53 |
-| Gene Name | TP53 |
-| Organism | Homo sapiens |
-| UniProt Accession | P04637 |
-| Sequence Type | Protein Sequence |
-
----
-
-# Biological Significance of p53
-
-p53 is a well-known **tumor suppressor protein** involved in:
-
-- Cell cycle regulation
-- DNA damage repair
-- Apoptosis
-- Genomic stability
-- Prevention of uncontrolled cell division
-
-Mutations in p53 are associated with several cancers including:
-
-- Breast cancer
-- Lung cancer
-- Colon cancer
-- Leukemia
-
-Because of its biological importance and strong evolutionary conservation, p53 is an ideal target for bioinformatics analysis.
-
----
-
-# Project Structure
-
-```text
-Functional_Sequence_Characterization/
-│
-├── data/
-│   └── p53.fasta
-│
-├── analysis/
-│   ├── sequence_analysis.py
-│   ├── homology_analysis.py
-│   └── functional_annotation.py
-│
-├── results/
-│   ├── blast_results.xml
-│   ├── blast_results.txt
-│   └── functional_annotation.txt
-│
-└── README.md
+`python analysis/functional_annotation.py` makes an explicit network request to `https://rest.uniprot.org/uniprotkb/P04637.json` with a timeout and HTTP/schema checks. On failure, the previous report remains untouched. On success it atomically replaces `results/functional_annotation.txt` and records retrieval time. This online step is not needed for offline analysis/tests. No live BLAST/UniProt call is performed by the offline commands.

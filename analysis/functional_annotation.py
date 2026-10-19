@@ -1,122 +1,47 @@
+"""Retrieve a direct UniProt-curated record, not homology-derived annotation."""
+from datetime import datetime, timezone
+from pathlib import Path
+import os
 import requests
-import json
 
-# UniProt accession ID
-accession_id = "P04637"
+ROOT = Path(__file__).resolve().parents[1]
+OUTPUT = ROOT / "results/functional_annotation.txt"
+ACCESSION = "P04637"
+URL = f"https://rest.uniprot.org/uniprotkb/{ACCESSION}.json"
 
-# UniProt API URL
-url = f"https://rest.uniprot.org/uniprotkb/{accession_id}.json"
+def render_report(data, retrieved_at):
+    if not isinstance(data, dict) or not isinstance(data.get("proteinDescription"), dict) or not isinstance(data.get("organism"), dict):
+        raise ValueError("UniProt response is missing required protein/organism fields")
+    names = data["proteinDescription"].get("recommendedName", {}).get("fullName", {})
+    name = names.get("value") if isinstance(names, dict) else None
+    organism = data["organism"].get("scientificName")
+    genes = data.get("genes", [])
+    gene = next((entry.get("geneName", {}).get("value") for entry in genes if isinstance(entry, dict) and isinstance(entry.get("geneName"), dict)), None)
+    if not name or not organism or not gene:
+        raise ValueError("UniProt response lacks recommended name, organism, or gene name")
+    function = None
+    for comment in data.get("comments", []):
+        if isinstance(comment, dict) and comment.get("commentType") == "FUNCTION":
+            texts = comment.get("texts", [])
+            if texts and isinstance(texts[0], dict): function = texts[0].get("value")
+            if function: break
+    if not function: function = "No FUNCTION comment was supplied in this response."
+    return ("UniProt-curated functional annotation (direct record; not homology inference)\n"
+            f"Accession: {ACCESSION}\nProtein: {name}\nGene: {gene}\nOrganism: {organism}\n"
+            f"Source: {URL}\nRetrieved UTC: {retrieved_at}\n\nFunction comment:\n{function}\n")
 
-# Send request to UniProt
-response = requests.get(url)
+def main():
+    try:
+        response = requests.get(URL, timeout=(5, 20), headers={"Accept":"application/json"})
+        response.raise_for_status()
+        data = response.json()
+        report = render_report(data, datetime.now(timezone.utc).isoformat())
+        OUTPUT.parent.mkdir(parents=True, exist_ok=True)
+        temp = OUTPUT.with_suffix(OUTPUT.suffix + ".tmp")
+        temp.write_text(report, encoding="utf-8")
+        os.replace(temp, OUTPUT)
+    except (requests.RequestException, ValueError, OSError) as exc:
+        raise SystemExit(f"UniProt annotation failed; existing report was not replaced: {exc}") from exc
+    print(f"UniProt-curated annotation saved to {OUTPUT}")
 
-# Convert response to JSON
-data = response.json()
-# print(data.keys())
-# print("*"*50)
-# print(data["proteinDescription"])
-# print("*"*50)
-# print(data["organism"])
-# print("*"*50)
-# print(data["genes"])
-
-#Extract important information
-
-protein_name = data["proteinDescription"]["recommendedName"]["fullName"]["value"]
-
-organism = data["organism"]["scientificName"]
-
-gene_name = data["genes"][0]["geneName"]["value"]
-
-#Extract function comment
-function_text = "Function annotation not found."
-
-for comment in data["comments"]:
-    if comment["commentType"] == "FUNCTION":
-        function_text = comment["texts"][0]["value"]
-        break
-
-# Create annotation report
-
-annotation_report = f"""
-Functional Annotation Report
-============================
-
-Protein Name:
-{protein_name}
-
-Gene Name:
-{gene_name}
-
-Organism:
-{organism}
-
-UniProt Accession:
-{accession_id}
-
-Predicted Function:
-{function_text}
-"""
-
-# Save annotation report
-
-with open("../results/functional_annotation.txt", "w", encoding="utf-8") as file:
-    file.write(annotation_report)
-
-print("Functional annotation retrieved successfully.")
-print("Annotation saved in functional_annotation.txt")
-
-
-
-
-
-
-
-
-
-
-
-
-
-# #Functional Annotation
-
-# # Functional annotation text
-# annotation = """
-# Functional Annotation of p53 Protein
-# ====================================
-
-# Protein Name:
-# Cellular tumor antigen p53
-
-# Organism:
-# Homo sapiens (Human)
-
-# UniProt Accession:
-# P04637
-
-# Predicted Function:
-# p53 is a tumor suppressor protein involved in the regulation
-# of the cell cycle, DNA repair, apoptosis, and genomic stability.
-
-# Biological Role:
-# The protein helps prevent uncontrolled cell division and
-# plays a critical role in protecting cells from cancer development.
-
-# Homology-Based Evidence:
-# BLAST analysis showed strong similarity with p53 proteins
-# from multiple mammalian species, indicating evolutionary conservation.
-
-# Conserved Features:
-# The protein contains conserved DNA-binding regions important
-# for transcription regulation and tumor suppression.
-
-# Organism Relevance:
-# In humans, p53 is one of the most important proteins involved
-# in cancer prevention and cellular stress response.
-# """
-
-# # Save annotation
-# with open("../results/functional_annotation.txt", "w") as output_file:
-#     output_file.write(annotation)
-
-# print("Functional annotation saved in functional_annotation.txt")
+if __name__ == "__main__": main()
